@@ -4,7 +4,7 @@ import pathlib
 from auditor.configauditor import CiscoConfigAuditor
 
 # Read config file
-run_cfg = pathlib.Path("offline_config.txt").read_text(encoding="utf-8")
+run_cfg = pathlib.Path("config.txt").read_text(encoding="utf-8")
 
 # Create audit instance
 audit = CiscoConfigAuditor()
