@@ -1,0 +1,41 @@
+[project]
+name = "config-auditor"
+version = "0.1.0"
+description = "A Cisco IOS & IOS-XE configuration audit tool"
+readme = "README.md"
+requires-python = ">=3.8"
+license = { file = "LICENSE" }
+keywords = ["cisco", "audit", "configuration audit"]
+authors = [{ name = "Osama Abbas", email = "oabbas2512@gmail.com" }]
+maintainers = [{ name = "Osama Abbas", email = "oabbas2512@gmail.com" }]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers, Network Engineer, NetDevOps Engineers, and DevSecOps Engineers",
+    "Topic :: Software Development :: Build Tools",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3 :: Only",
+    "Operating System :: MacOS :: MacOS X",
+    "Operating System :: Microsoft :: Windows",
+]
+dependencies = ["ciscoconfparse", "rich"]
+
+[project.optional-dependencies]
+dev = ["pre-commit", "black", "isort"]
+
+[project.urls]
+"Homepage" = "https://github.com/Tes3awy/config_auditor/"
+"Bug Tracker" = "https://github.com/Tes3awy/config_auditor/issues/"
+"Say Thanks!" = "http://saythanks.io/to/config_auditor/"
+"Source" = "https://github.com/Tes3awy/config_auditor/"
+
+[build-system]
+requires = ["setuptools>=68.2.2"]
+build-backend = "setuptools.build_meta"
