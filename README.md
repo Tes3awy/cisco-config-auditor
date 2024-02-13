@@ -2,8 +2,8 @@
 
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg?style=flat-square)](https://github.com/psf/black)
 [![Imports: isort](https://img.shields.io/badge/%20imports-isort-%231674b1?style=flat-square&labelColor=ef8336)](https://pycqa.github.io/isort/)
-![LICENSE](https://img.shields.io/github/license/Tes3awy/config-auditor?color=purple&style=flat-square&label=LICENSE)
-![Commit Activity](https://img.shields.io/github/commit-activity/m/Tes3awy/config-auditor/main?logo=github&style=flat-square)
+![LICENSE](https://img.shields.io/github/license/Tes3awy/cisco-config-auditor?color=purple&style=flat-square&label=LICENSE)
+![Commit Activity](https://img.shields.io/github/commit-activity/m/Tes3awy/cisco-config-auditor/main?logo=github&style=flat-square)
 
 > Based on [Use Cisco IOS XE Hardening Guide](https://www.cisco.com/c/en/us/support/docs/ios-nx-os-software/ios-xe-16/220270-use-cisco-ios-xe-hardening-guide.html) and some opinionated best practices.
 
