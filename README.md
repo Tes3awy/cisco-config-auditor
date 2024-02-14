@@ -12,39 +12,10 @@ This script gives an overview of the hardening techniques that can be used to se
 
 ## Installation
 
-### Install from PyPi
+> Install from PyPi
 
 ```bash
 $ pip install ciscoconfaudit
-```
-
-Clone repo, create a virtual environment, and install requirements.
-
-### macOS or Linux
-
-```bash
-$ git clone https://github.com/Tes3awy/cisco-config-auditor.git
-$ cd auditor
-$ python3 -m venv .venv --upgrade-deps
-$ source .venv/bin/activate .
-(.venv) $ python3 -m pip install -r requirements.txt
-```
-
-### Windows
-
-> Note On Microsoft Windows, it may be required to enable the `Activate.ps1` script by setting the execution policy for the user.  
-> You can do this by issuing the following PowerShell command:  
-> `PS C:> Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser`  
-> See [About Execution Policies](https://go.microsoft.com/fwlink/?LinkID=135170) for more information.
-
-> In PowerShell
-
-```pwsh
-> git clone https://github.com/Tes3awy/cisco-config-auditor.git
-> cd auditor
-> python -m venv .venv --upgrade-deps
-> .venv\Scripts\Activate.ps1  # Check
-(.venv) > pip install -r requirements.txt
 ```
 
 ## Usage
@@ -55,6 +26,12 @@ You can try out two examples in the repo.
 (.venv) $ python3 online.py   # parses config from a device (Uses netmiko)
 (.venv) $ python3 offline.py  # parses config from text file
 ```
+
+### Example Output
+
+| Global Config Audit (Sample)                             | Interface-Level Audit                                        |
+| -------------------------------------------------------- | ------------------------------------------------------------ |
+| ![Global Config Audit](./assets/global-config-audit.jpg) | ![Interface Level Audit](./assets/interface-level-audit.jpg) |
 
 ## Credits
 
