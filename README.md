@@ -16,7 +16,7 @@ Clone repo, create a virtual environment, and install requirements.
 ### macOS or Linux
 
 ```bash
-$ git clone ...
+$ git clone https://github.com/Tes3awy/cisco-config-auditor.git
 $ cd auditor
 $ python3 -m venv .venv --upgrade-deps
 $ source .venv/bin/activate .
@@ -25,13 +25,18 @@ $ source .venv/bin/activate .
 
 ### Windows
 
+> Note On Microsoft Windows, it may be required to enable the `Activate.ps1` script by setting the execution policy for the user.  
+> You can do this by issuing the following PowerShell command:  
+> `PS C:> Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser`  
+> See [About Execution Policies](https://go.microsoft.com/fwlink/?LinkID=135170) for more information.
+
 > In PowerShell
 
 ```pwsh
-> git clone ...
+> git clone https://github.com/Tes3awy/cisco-config-auditor.git
 > cd auditor
 > python -m venv .venv --upgrade-deps
-> .venv\Scripts\Activate.ps1
+> .venv\Scripts\Activate.ps1  # Check
 (.venv) > pip install -r requirements.txt
 ```
 
