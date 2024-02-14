@@ -2,7 +2,7 @@
 from netmiko import ConnectHandler
 from rich import print
 
-from auditor.configauditor import CiscoConfigAuditor
+from ciscoconfaudit import CiscoConfAudit
 
 devices = [
     {
@@ -27,7 +27,7 @@ for device in devices:
     print(f"Disconnected from {conn.host}")
 
     # Create audit instance
-    audit = CiscoConfigAuditor()
+    audit = CiscoConfAudit()
     # Global Audit
     audit.global_config(config)
     # Interace-Level Audit

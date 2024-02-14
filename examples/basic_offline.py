@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
-import pathlib
+from pathlib import Path
 
-from auditor.configauditor import CiscoConfigAuditor
+from ciscoconfaudit import CiscoConfAudit
 
 # Read config file
-run_cfg = pathlib.Path("config.txt").read_text(encoding="utf-8")
+run_cfg = Path("config-sample.txt").read_text(encoding="utf-8")
 
 # Create audit instance
-audit = CiscoConfigAuditor()
+audit = CiscoConfAudit()
 
 # Global Audit
 audit.global_config(run_cfg)
