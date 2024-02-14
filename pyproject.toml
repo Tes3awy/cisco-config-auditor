@@ -11,7 +11,8 @@ maintainers = [{ name = "Osama Abbas", email = "oabbas2512@gmail.com" }]
 classifiers = [
     "Development Status :: 5 - Production/Stable",
     "Environment :: Console",
-    "Intended Audience :: Developers, System Administrators",
+    "Intended Audience :: Developers",
+    "Intended Audience :: System Administrators",
     "Topic :: Software Development :: Libraries :: Python Modules",
     "Topic :: Software Development :: Quality Assurance",
     "Topic :: System :: Networking :: Monitoring",
