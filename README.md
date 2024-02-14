@@ -4,12 +4,19 @@
 [![Imports: isort](https://img.shields.io/badge/%20imports-isort-%231674b1?style=flat-square&labelColor=ef8336)](https://pycqa.github.io/isort/)
 ![LICENSE](https://img.shields.io/github/license/Tes3awy/cisco-config-auditor?color=purple&style=flat-square&label=LICENSE)
 ![Commit Activity](https://img.shields.io/github/commit-activity/m/Tes3awy/cisco-config-auditor/main?logo=github&style=flat-square)
+[![Say Thanks!](https://img.shields.io/badge/Say%20Thanks-!-1EAEDB.svg)](https://saythanks.io/to/Tes3awy)
 
 > Based on [Use Cisco IOS XE Hardening Guide](https://www.cisco.com/c/en/us/support/docs/ios-nx-os-software/ios-xe-16/220270-use-cisco-ios-xe-hardening-guide.html) and some opinionated best practices.
 
 This script gives an overview of the hardening techniques that can be used to secure a Cisco network device. Security is not a one-layer thing, yet, it depends on multiple factors. If you harden your devices, then it is a good starting point that increases the overall security of the environment you manage.
 
 ## Installation
+
+### Install from PyPi
+
+```bash
+$ pip install ciscoconfaudit
+```
 
 Clone repo, create a virtual environment, and install requirements.
 
@@ -51,7 +58,7 @@ You can try out two examples in the repo.
 
 ## Credits
 
-This script was inspired by [jonarm](https://github.com/jonarm) from [cisco-ios-audit](https://github.com/jonarm/cisco-ios-audit).
+This package was inspired by [jonarm](https://github.com/jonarm) from [cisco-ios-audit](https://github.com/jonarm/cisco-ios-audit).
 
 ## Author
 
