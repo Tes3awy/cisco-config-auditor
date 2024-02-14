@@ -1,6 +1,6 @@
 [project]
 name = "ciscoconfaudit"
-version = "0.1.0"
+version = "0.1.1"
 description = "A Cisco IOS & IOS-XE configuration audit tool"
 readme = "README.md"
 requires-python = ">=3.8"
@@ -43,8 +43,8 @@ requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [tool.bumpver]
-current_version = "0.1.0"
-version_pattern = "MAJOR.MINOR.PATCH[PYTAGNUM]"
+current_version = "0.1.1"
+version_pattern = "MAJOR.MINOR.PATCH"
 commit_message = "Bump version {old_version} -> {new_version}"
 commit = true
 tag = true
