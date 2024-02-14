@@ -1,5 +1,5 @@
 [project]
-name = "config-auditor"
+name = "ciscoconfaudit"
 version = "0.1.0"
 description = "A Cisco IOS & IOS-XE configuration audit tool"
 readme = "README.md"
@@ -10,20 +10,21 @@ authors = [{ name = "Osama Abbas", email = "oabbas2512@gmail.com" }]
 maintainers = [{ name = "Osama Abbas", email = "oabbas2512@gmail.com" }]
 classifiers = [
     "Development Status :: 5 - Production/Stable",
-    "Intended Audience :: Developers, Network Engineer, NetDevOps Engineers, and DevSecOps Engineers",
-    "Topic :: Software Development :: Build Tools",
-    "License :: OSI Approved :: MIT License",
-    "Programming Language :: Python :: 3",
+    "Environment :: Console",
+    "Intended Audience :: Developers, System Administrators",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Software Development :: Quality Assurance",
+    "Topic :: System :: Networking :: Monitoring",
+    "Topic :: System :: Systems Administration",
+    "License :: OSI Approved :: GNU General Public License (GPL)",
+    "Natural Language :: English",
     "Operating System :: OS Independent",
-    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
     "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
-    "Programming Language :: Python :: 3 :: Only",
-    "Operating System :: MacOS :: MacOS X",
-    "Operating System :: Microsoft :: Windows",
 ]
 dependencies = ["ciscoconfparse", "rich"]
 
@@ -31,11 +32,28 @@ dependencies = ["ciscoconfparse", "rich"]
 dev = ["pre-commit", "black", "isort"]
 
 [project.urls]
-"Homepage" = "https://github.com/Tes3awy/config_auditor/"
-"Bug Tracker" = "https://github.com/Tes3awy/config_auditor/issues/"
-"Say Thanks!" = "http://saythanks.io/to/config_auditor/"
-"Source" = "https://github.com/Tes3awy/config_auditor/"
+"Homepage" = "https://github.com/Tes3awy/cisco-config-auditor/"
+"Bug Tracker" = "https://github.com/Tes3awy/cisco-config-auditor/issues/"
+"Say Thanks!" = "https://saythanks.io/to/Tes3awy"
+"Source" = "https://github.com/Tes3awy/cisco-config-auditor/"
 
 [build-system]
-requires = ["setuptools>=68.2.2"]
+requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
+
+[tool.bumpver]
+current_version = "0.1.0"
+version_pattern = "MAJOR.MINOR.PATCH"
+commit_message = "Bump version {old_version} -> {new_version}"
+commit = true
+tag = true
+push = true
+tag_message = "{new_version}"
+tag_scope = "default"
+pre_commit_hook = ""
+post_commit_hook = ""
+
+[tool.bumpver.file_patterns]
+"pyproject.toml" = ['current_version = "{version}"', 'version = "{version}"']
+"src/ciscoconfaudit/__init__.py" = ["{version}"]
+"README.md" = ["{version}", "{pep440_version}"]
