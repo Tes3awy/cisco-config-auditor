@@ -10,7 +10,7 @@
 
 > Based on [Use Cisco IOS XE Hardening Guide](https://www.cisco.com/c/en/us/support/docs/ios-nx-os-software/ios-xe-16/220270-use-cisco-ios-xe-hardening-guide.html) and some opinionated best practices.
 
-This package gives an overview of the hardening techniques that can be used to secure a Cisco network device. Security is not a one-layer thing, yet, it depends on multiple factors. If you harden your devices, then it is a good starting point that increases the overall security of the environment you manage.
+This package gives an overview of the hardening techniques that can be used to secure a Cisco network device. Network security is not a one-layer thing, yet, it depends on multiple factors. If you harden your devices, then it is a good starting point that increases the overall security of the environment you manage.
 
 ## Installation
 
