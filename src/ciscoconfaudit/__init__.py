@@ -3,7 +3,7 @@ from ciscoconfparse import CiscoConfParse
 from rich.console import Console
 from rich.table import Table
 
-__version__ = "0.1.1"
+__version__ = "0.1.2"
 __all__ = ["ciscoconfaudit"]
 PY_MAJ_VER = 3
 PY_MIN_VER = 8
