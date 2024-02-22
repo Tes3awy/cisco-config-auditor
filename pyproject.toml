@@ -2,8 +2,8 @@
 name = "ciscoconfaudit"
 version = "0.1.2"
 description = "A Cisco IOS & IOS-XE configuration audit tool"
-readme = "README.md"
-requires-python = ">=3.8"
+readme = { file = "README.md", content-type = "text/markdown" }
+requires-python = ">=3.8, <4"
 license = { file = "LICENSE" }
 keywords = ["cisco", "audit", "configuration audit"]
 authors = [{ name = "Osama Abbas", email = "oabbas2512@gmail.com" }]
@@ -26,21 +26,27 @@ classifiers = [
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
+    "Typing :: Typed",
 ]
 dependencies = ["ciscoconfparse", "rich"]
 
 [project.optional-dependencies]
-dev = ["pre-commit", "black", "isort"]
+dev = ["pre-commit", "bumpver", "black", "isort"]
 
 [project.urls]
-"Homepage" = "https://github.com/Tes3awy/cisco-config-auditor/"
-"Bug Tracker" = "https://github.com/Tes3awy/cisco-config-auditor/issues/"
+Homepage = "https://github.com/Tes3awy/cisco-config-auditor/"
+Repository = "https://github.com/Tes3awy/cisco-config-auditor/"
+Issues = "https://github.com/Tes3awy/cisco-config-auditor/issues/"
 "Say Thanks!" = "https://saythanks.io/to/Tes3awy"
-"Source" = "https://github.com/Tes3awy/cisco-config-auditor/"
+Source = "https://github.com/Tes3awy/cisco-config-auditor/"
+Changelog = "https://github.com/Tes3awy/cisco-config-auditor/CHANGELOG.md"
 
 [build-system]
-requires = ["setuptools>=61.0"]
+requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
+
+[tool.isort]
+profile = "black"
 
 [tool.bumpver]
 current_version = "0.1.2"
@@ -51,10 +57,7 @@ tag = true
 push = true
 tag_message = "{new_version}"
 tag_scope = "default"
-pre_commit_hook = ""
-post_commit_hook = ""
 
 [tool.bumpver.file_patterns]
 "pyproject.toml" = ['current_version = "{version}"', 'version = "{version}"']
 "src/ciscoconfaudit/__init__.py" = ['^__version__ = "{version}"$']
-"README.md" = ["{version}", "{pep440_version}"]
