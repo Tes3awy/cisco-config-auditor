@@ -25,7 +25,7 @@ $ pip install ciscoconfaudit
 
 ## Usage
 
-You can try out _two examples_ in the repo.
+You can try out _two examples_ in the repo in [examples](https://github.com/Tes3awy/cisco-config-auditor/tree/main/examples).
 
 ```bash
 (.venv) $ python3 basic_online.py   # Parses config from a device (Uses netmiko)
@@ -38,17 +38,17 @@ You can try out _two examples_ in the repo.
 | ---------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
 | ![Global Config Audit](https://github.com/Tes3awy/cisco-config-auditor/blob/main/assets/global-config-audit.jpg) | ![Interface Level Audit](https://github.com/Tes3awy/cisco-config-auditor/blob/main/assets/interface-level-audit.jpg) |
 
-## USE CASE
+## Use Case
 
 - Ever been tired of checking whether the Cisco hardneing technqiues (_[here](https://www.cisco.com/c/en/us/support/docs/ios-nx-os-software/ios-xe-16/220270-use-cisco-ios-xe-hardening-guide.html)_) are applied to your network devices one by one? This package is very handy in generating a tabular report for you.
-
-## Credits
-
-This package was inspired by [jonarm](https://github.com/jonarm) from [cisco-ios-audit](https://github.com/jonarm/cisco-ios-audit).
 
 ## Author
 
 [Osama Abbas](https://github.com/Tes3awy)
+
+## Credits
+
+This package was inspired by [jonarm](https://github.com/jonarm) from [cisco-ios-audit](https://github.com/jonarm/cisco-ios-audit).
 
 ## Contributions
 
