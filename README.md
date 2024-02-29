@@ -1,4 +1,4 @@
-# Cisco Config Auditor
+# ciscoconfaudit
 
 [![published](https://static.production.devnetcloud.com/codeexchange/assets/images/devnet-published.svg)](https://developer.cisco.com/codeexchange/github/repo/Tes3awy/cisco-config-auditor)
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/ciscoconfaudit)
