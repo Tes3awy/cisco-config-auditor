@@ -8,7 +8,7 @@
 ![Commit Activity](https://img.shields.io/github/commit-activity/m/Tes3awy/cisco-config-auditor/main?logo=github&style=flat-square)
 ![PyPI - Version](https://img.shields.io/pypi/v/ciscoconfaudit)
 ![PyPI - Status](https://img.shields.io/pypi/status/ciscoconfaudit)
-![PyPI - Downloads](https://img.shields.io/pypi/dm/ciscoconfaudit)
+[![Downloads](https://static.pepy.tech/badge/ciscoconfaudit)](https://pepy.tech/project/ciscoconfaudit)
 [![Say Thanks!](https://img.shields.io/badge/Say%20Thanks-!-1EAEDB.svg)](https://saythanks.io/to/Tes3awy)
 
 > Based on [Use Cisco IOS XE Hardening Guide](https://www.cisco.com/c/en/us/support/docs/ios-nx-os-software/ios-xe-16/220270-use-cisco-ios-xe-hardening-guide.html) and some opinionated best practices.
