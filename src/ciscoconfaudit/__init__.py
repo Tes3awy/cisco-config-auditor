@@ -3,7 +3,7 @@ from ciscoconfparse import CiscoConfParse
 from rich.console import Console
 from rich.table import Table
 
-__version__ = "0.1.2"
+__version__ = "0.2.0"
 __all__ = ["ciscoconfaudit"]
 PY_MAJ_VER = 3
 PY_MIN_VER = 8
@@ -72,7 +72,7 @@ class CiscoConfAudit(object):
     def global_config(self, running_config: str):
         # Parse configuration
         self.parse = CiscoConfParse(
-            running_config.splitlines(), syntax="ios", factory=True
+            running_config.splitlines(), syntax="ios", factory=True, read_only=True
         )
         hostname = self.parse.re_match_iter_typed(
             r"^hostname\s+(\S+)", default="Device"
@@ -143,8 +143,12 @@ class CiscoConfAudit(object):
             "ip dhcp snooping information option",
         )
         self.check_config(r"^ip\sssh\sversion\s2$", "ip ssh version 2")
+        self.check_config(r"^ip\sssh\stime-out\s60$", "ip ssh time-out 60")
         self.check_config(
-            r"^ip\sssh\sdh\smin\ssize\s\d{3,4}$", "ip ssh dh min size 2048"
+            r"^ip\sssh\sauthentication-retries\s3$", "ip ssh authentication-retries 3"
+        )
+        self.check_config(
+            r"^ip\sssh\sdh\smin\ssize\s(2048|4096)$", "ip ssh dh min size 2048|4096"
         )
         self.check_optional_config(
             r"^ip\sssh\sserver\salgorithm\sencryption\saes\d{3}-ctr\saes\d{3}-ctr\saes\d{3}-ctr$",
@@ -160,6 +164,7 @@ class CiscoConfAudit(object):
             r"^no\sip\sgratuitous-arps$|^no\sip\sarp\sgratuitous$",
             "no ip gratuitous-arps | no ip arp gratuitous",
         )
+        self.check_config(r"^ip\soptions\sdrop$", "ip options drop")
         self.check_config(r"^no\svstack$", "no vstack")
         self.check_config(r"^no\slogging\sconsole$", "no logging console")
         self.check_config(r"^no\slogging\smonitor$", "no logging monitor")
@@ -179,8 +184,7 @@ class CiscoConfAudit(object):
             "exception crashinfo maximum files <number-of-files>",
         )
         self.check_optional_config(
-            r"^vtp\smode\stransparent$|^vtp\smode\soff$",
-            "vtp mode transparent | vtp mode off",
+            r"^vtp\smode\s(transparent|off)$", "vtp mode transparent|off"
         )
         self.check_optional_config(
             r"^no\ssystem\signore\sstartupconfig\sswitch\sall$",
@@ -202,6 +206,10 @@ class CiscoConfAudit(object):
             "clock timezone <timezone> <hours_offset> <mintues_offset>",
         )
         self.check_config(r"^ntp\sserver\s\d", "ntp server")
+        # IOS and IOS-XE versions only
+        self.check_config(
+            r"^no\sntp\sallow\smode\scontrol\s0$", "no ntp allow mode control 0"
+        )
         self.check_config(
             r"^username\s\w+\sprivilege\s\d{1,2}\ssecret\s[8-9]\s",
             "username <username> privilege <priv_level> secret [8-9] <password>",
@@ -211,7 +219,7 @@ class CiscoConfAudit(object):
             "enable algorithm-type scrypt secret <password>",
         )
         # Check for AAA settings
-        if self.parse.find_lines("^no\saaa\snew-model$"):
+        if self.parse.find_lines(r"^no\saaa\snew-model$"):
             self.global_table.add_row("aaa new-model", FAIL)
         else:
             self.global_table.add_row("aaa new-model", PASS)
@@ -259,10 +267,10 @@ class CiscoConfAudit(object):
                 "aaa accounting commands 15 default start-stop group tacacs",
             )
 
-        # Check for weak SNMP community strings
+        # Check for weak SNMPv2c community strings
         self.check_vuln_config(
             r"^snmp-server\scommunity\sprivate\srw$|^snmp-server\scommunity\spublic\sro$",
-            "Weak snmpv2c community string (Trivial authentication)",
+            "Weak SNMPv2c community string (Trivial authentication)",
         )
 
     # Interface-Level Audit
@@ -283,6 +291,7 @@ class CiscoConfAudit(object):
         self.check_cdp(self.parse)
         self.check_lldp(self.parse)
         self.check_ip_src_verify(self.parse)
+        self.check_sticky_mac(self.parse)
         self.check_arp_proxy(self.parse)
         self.check_ip_redirects(self.parse)
         self.check_ip_unreachables(self.parse)
@@ -523,6 +532,36 @@ class CiscoConfAudit(object):
                 )
         except ZeroDivisionError:
             self.interface_table.add_row(f"ip verify source {ACC_INTF_VERIFY}", WARN)
+
+    def check_sticky_mac(self, parse: CiscoConfParse):
+        mac_sticky_total, mac_stick_pass = 0, 0
+        mac_sticky_intfs = parse.find_objects_w_child(
+            parentspec=r"^interface\s", childspec=IS_ACCESS_PORT
+        )
+        for mac_sticky_obj in mac_sticky_intfs:
+            if (
+                not mac_sticky_obj.re_search_children(r"^\sswitchport\sport-security$")
+                and mac_sticky_obj.re_search_children(
+                    r"^\sswitchport\sport-security\smac-address\ssticky$"
+                )
+                and not mac_sticky_obj.re_search_children(r"^\sshutdown$")
+            ):
+                self.interface_table.add_row(
+                    f"'{mac_sticky_obj.text}' switchport port-security mac-address sticky",
+                    FAIL,
+                )
+            else:
+                mac_stick_pass += 1
+            mac_sticky_total += 1
+        try:
+            if mac_stick_pass / mac_sticky_total == 1:
+                self.interface_table.add_row(
+                    "switchport port-security (All access interfaces)", PASS
+                )
+        except ZeroDivisionError:
+            self.interface_table.add_row(
+                f"switchport port-security mac-address sticky {ACC_INTF_VERIFY}", WARN
+            )
 
     # L3 interfaces
     def check_arp_proxy(self, parse: CiscoConfParse):
