@@ -39,7 +39,7 @@ Repository = "https://github.com/Tes3awy/cisco-config-auditor/"
 Issues = "https://github.com/Tes3awy/cisco-config-auditor/issues/"
 "Say Thanks!" = "https://saythanks.io/to/Tes3awy"
 Source = "https://github.com/Tes3awy/cisco-config-auditor/"
-Changelog = "https://github.com/Tes3awy/cisco-config-auditor/CHANGELOG.md"
+Changelog = "https://raw.githubusercontent.com/Tes3awy/cisco-config-auditor/main/CHANGELOG.md"
 
 [build-system]
 requires = ["setuptools>=61.0", "wheel"]
