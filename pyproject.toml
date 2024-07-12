@@ -1,9 +1,9 @@
 [project]
 name = "ciscoconfaudit"
-version = "0.2.0"
-description = "A Cisco IOS & IOS-XE configuration audit tool"
+version = "0.2.1"
+description = "A Cisco IOS, IOS-XE, & NX-OS configuration audit tool"
 readme = { file = "README.md", content-type = "text/markdown" }
-requires-python = ">=3.8, <4"
+requires-python = ">=3.9, <4"
 license = { file = "LICENSE" }
 keywords = ["cisco", "audit", "configuration audit"]
 authors = [{ name = "Osama Abbas", email = "oabbas2512@gmail.com" }]
@@ -21,17 +21,16 @@ classifiers = [
     "Natural Language :: English",
     "Operating System :: OS Independent",
     "Programming Language :: Python :: 3 :: Only",
-    "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Typing :: Typed",
 ]
-dependencies = ["ciscoconfparse", "rich"]
+dependencies = ["ciscoconfparse2", "rich"]
 
 [project.optional-dependencies]
-dev = ["pre-commit", "bumpver", "black", "isort"]
+dev = ["pre-commit", "bumpver", "black", "isort", "python-dotenv"]
 
 [project.urls]
 Homepage = "https://github.com/Tes3awy/cisco-config-auditor/"
@@ -49,7 +48,7 @@ build-backend = "setuptools.build_meta"
 profile = "black"
 
 [tool.bumpver]
-current_version = "0.2.0"
+current_version = "0.2.1"
 version_pattern = "MAJOR.MINOR.PATCH"
 commit_message = "Bump version {old_version} -> {new_version}"
 commit = true
