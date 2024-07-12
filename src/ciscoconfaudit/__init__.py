@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
-from ciscoconfparse import CiscoConfParse
+from ciscoconfparse2 import CiscoConfParse
 from rich.console import Console
 from rich.table import Table
 
-__version__ = "0.2.0"
+__version__ = "0.2.1"
 __all__ = ["ciscoconfaudit"]
 PY_MAJ_VER = 3
-PY_MIN_VER = 8
-MIN_PYTHON_VER = "3.8"
+PY_MIN_VER = 9
+MIN_PYTHON_VER = "3.9"
 
 FAIL = "[bold red]:heavy_multiplication_x: FAIL[/bold red]"
 PASS = "[bold green]:heavy_check_mark: PASS[/bold green]"
@@ -43,27 +43,27 @@ class CiscoConfAudit(object):
 
     # Configuration Checks
     def check_service(self, pattern: str, cmd: str):
-        if self.parse.find_lines(pattern):
+        if self.parse.find_objects(pattern):
             self.global_table.add_row(cmd, FAIL)
         else:
             self.global_table.add_row(cmd, PASS)
 
     def check_config(self, pattern: str, cmd: str):
-        if self.parse.find_lines(pattern):
+        if self.parse.find_objects(pattern):
             self.global_table.add_row(cmd, PASS)
         else:
             self.global_table.add_row(cmd, FAIL)
 
     def check_vuln_config(self, pattern: str, cmd: str):
-        if not self.parse.find_lines(pattern):
+        if not self.parse.find_objects(pattern):
             self.global_table.add_row(cmd, NOT_IN_USE)
-        elif self.parse.find_lines(pattern):
+        elif self.parse.find_objects(pattern):
             self.global_table.add_row(cmd, WARN)
         else:
             self.global_table.add_row(cmd, PASS)
 
     def check_optional_config(self, pattern: str, cmd: str):
-        if self.parse.find_lines(pattern):
+        if self.parse.find_objects(pattern):
             self.global_table.add_row(cmd, PASS)
         else:
             self.global_table.add_row(cmd, RECOMMENDED)
@@ -72,7 +72,7 @@ class CiscoConfAudit(object):
     def global_config(self, running_config: str):
         # Parse configuration
         self.parse = CiscoConfParse(
-            running_config.splitlines(), syntax="ios", factory=True, read_only=True
+            running_config.splitlines(), syntax="ios", factory=True
         )
         hostname = self.parse.re_match_iter_typed(
             r"^hostname\s+(\S+)", default="Device"
@@ -103,7 +103,7 @@ class CiscoConfAudit(object):
         self.check_service(r"^no\sservice\sconfig$", "no service config")
         self.check_config(
             r"^no\sservice\spassword-recovery$",
-            "no service password-recovery (Use with caution)",
+            "no service password-recovery ([yellow]Use with caution[/yellow])",
         )
         self.check_service(r"^service\scall-home$", "no service call-home")
         self.check_service(
@@ -219,7 +219,7 @@ class CiscoConfAudit(object):
             "enable algorithm-type scrypt secret <password>",
         )
         # Check for AAA settings
-        if self.parse.find_lines(r"^no\saaa\snew-model$"):
+        if self.parse.find_objects(r"^no\saaa\snew-model$"):
             self.global_table.add_row("aaa new-model", FAIL)
         else:
             self.global_table.add_row("aaa new-model", PASS)
@@ -317,7 +317,7 @@ class CiscoConfAudit(object):
 
     def check_mop(self, parse: CiscoConfParse):
         mop_intfs_total, mop_intfs_success = 0, 0
-        cdp_intfs = parse.find_objects_w_child(
+        cdp_intfs = parse.find_child_objects(
             parentspec=r"^interface\s", childspec=IS_ACCESS_PORT
         )
         for cdp_obj in cdp_intfs:
@@ -338,7 +338,7 @@ class CiscoConfAudit(object):
 
     def check_port_security(self, parse: CiscoConfParse):
         ps_intfs_total, ps_intfs_pass = 0, 0
-        ps_intfs = parse.find_objects_w_child(
+        ps_intfs = parse.find_child_objects(
             parentspec=r"^interface\s", childspec=IS_ACCESS_PORT
         )
         for ps_obj in ps_intfs:
@@ -370,7 +370,7 @@ class CiscoConfAudit(object):
     def check_stp_portfast(self, parse: CiscoConfParse):
         if not bool(parse.find_objects(r"^spanning-tree\sportfast\sdefault$")):
             stp_intfs_total, stp_intfs_pass = 0, 0
-            stp_intfs = parse.find_objects_w_child(
+            stp_intfs = parse.find_child_objects(
                 parentspec=r"^interface\s", childspec=IS_ACCESS_PORT
             )
             for stp_obj in stp_intfs:
@@ -403,7 +403,7 @@ class CiscoConfAudit(object):
             parse.find_objects(r"^spanning-tree\sportfast\sbpduguard\sdefault$")
         ):
             bpdu_intfs_total, bpdu_intfs_pass = 0, 0
-            bpdu_intfs = parse.find_objects_w_child(
+            bpdu_intfs = parse.find_child_objects(
                 parentspec=r"^interf", childspec=IS_ACCESS_PORT
             )
             for bpdu_obj in bpdu_intfs:
@@ -433,7 +433,7 @@ class CiscoConfAudit(object):
 
     def check_stp_root(self, parse: CiscoConfParse):
         root_intfs_total, root_intfs_pass = 0, 0
-        root_intfs = parse.find_objects_w_child(
+        root_intfs = parse.find_child_objects(
             parentspec=r"^interface\s", childspec=IS_ACCESS_PORT
         )
         for root_obj in root_intfs:
@@ -459,7 +459,7 @@ class CiscoConfAudit(object):
     def check_cdp(self, parse: CiscoConfParse):
         if not bool(parse.find_objects(r"^no\scdp\srun$")):
             cdp_intfs_total, cdp_intfs_pass = 0, 0
-            cdp_intfs = parse.find_objects_w_child(
+            cdp_intfs = parse.find_child_objects(
                 parentspec=r"^interface\s", childspec=IS_ACCESS_PORT
             )
             for cdp_obj in cdp_intfs:
@@ -483,7 +483,7 @@ class CiscoConfAudit(object):
     def check_lldp(self, parse: CiscoConfParse):
         if not bool(parse.find_objects(r"^no\slldp\srun$")):
             lldp_intfs_total, lldp_intfs_pass = 0, 0
-            lldp_intfs = parse.find_objects_w_child(
+            lldp_intfs = parse.find_child_objects(
                 parentspec=r"^interface\s", childspec=IS_ACCESS_PORT
             )
             for lldp_obj in lldp_intfs:
@@ -512,7 +512,7 @@ class CiscoConfAudit(object):
 
     def check_ip_src_verify(self, parse: CiscoConfParse):
         src_verify_total, src_verify_pass = 0, 0
-        src_verify_intfs = parse.find_objects_w_child(
+        src_verify_intfs = parse.find_child_objects(
             parentspec=r"^interface\s", childspec=IS_ACCESS_PORT
         )
         for src_verify_obj in src_verify_intfs:
@@ -535,7 +535,7 @@ class CiscoConfAudit(object):
 
     def check_sticky_mac(self, parse: CiscoConfParse):
         mac_sticky_total, mac_stick_pass = 0, 0
-        mac_sticky_intfs = parse.find_objects_w_child(
+        mac_sticky_intfs = parse.find_child_objects(
             parentspec=r"^interface\s", childspec=IS_ACCESS_PORT
         )
         for mac_sticky_obj in mac_sticky_intfs:
@@ -567,7 +567,7 @@ class CiscoConfAudit(object):
     def check_arp_proxy(self, parse: CiscoConfParse):
         if not bool(parse.find_objects(r"^ip\sarp\sproxy\sdisable$")):
             arp_intfs_total, arp_intfs_pass = 0, 0
-            arp_intfs = parse.find_objects_w_child(
+            arp_intfs = parse.find_child_objects(
                 parentspec=r"^interface\s", childspec=r"^\sip\saddress\s"
             )
             for arp_obj in arp_intfs:
@@ -594,7 +594,7 @@ class CiscoConfAudit(object):
 
     def check_ip_redirects(self, parse: CiscoConfParse):
         redirect_intfs_total, redirect_intfs_pass = 0, 0
-        redirect_intfs = parse.find_objects_w_child(
+        redirect_intfs = parse.find_child_objects(
             parentspec=r"^interface\s", childspec=r"^\sip\saddress\s"
         )
         for redirect_obj in redirect_intfs:
@@ -602,7 +602,7 @@ class CiscoConfAudit(object):
                 r"^\sno\sip\sredirects$"
             ) and not redirect_obj.has_child_with(r"^\sshutdown$"):
                 self.interface_table.add_row(
-                    f"'{redirect_obj.text}' no ip redirects", FAIL
+                    f"'{redirect_obj.parent}' no ip redirects", FAIL
                 )
             else:
                 redirect_intfs_pass += 1
@@ -615,7 +615,7 @@ class CiscoConfAudit(object):
 
     def check_route_cache(self, parse: CiscoConfParse):
         rcache_intfs_total, rcache_intfs_pass = 0, 0
-        rcache_intfs = parse.find_objects_w_child(
+        rcache_intfs = parse.find_child_objects(
             parentspec=r"^interface\s", childspec=r"^\sip\saddress\s"
         )
         for rcache_obj in rcache_intfs:
@@ -623,7 +623,7 @@ class CiscoConfAudit(object):
                 r"^\sno\sip\sroute-cache$"
             ) and not rcache_obj.has_child_with(r"^\sshutdown$"):
                 self.interface_table.add_row(
-                    f"'{rcache_obj.text}' no ip route-cache", FAIL
+                    f"'{rcache_obj.parent}' no ip route-cache", FAIL
                 )
             else:
                 rcache_intfs_pass += 1
@@ -636,7 +636,7 @@ class CiscoConfAudit(object):
 
     def check_directed_broadcast(self, parse: CiscoConfParse):
         redirect_intfs_total, redirect_intfs_pass = 0, 0
-        redirect_intfs = parse.find_objects_w_child(
+        redirect_intfs = parse.find_child_objects(
             parentspec=r"^interface\s", childspec=r"^\sip\saddress\s"
         )
         for redirect_obj in redirect_intfs:
@@ -644,7 +644,7 @@ class CiscoConfAudit(object):
                 r"^\sno\sip\sdirected-broadcast$"
             ) and not redirect_obj.re_search_children(r"^\sshutdown$"):
                 self.interface_table.add_row(
-                    f"'{redirect_obj.text}' no ip directed-broadcast", FAIL
+                    f"'{redirect_obj.parent}' no ip directed-broadcast", FAIL
                 )
             else:
                 redirect_intfs_pass += 1
@@ -661,7 +661,7 @@ class CiscoConfAudit(object):
 
     def check_ip_unreachables(self, parse: CiscoConfParse):
         unreachable_intfs_total, unreachable_intfs_pass = 0, 0
-        unreachable_intfs = parse.find_objects_w_child(
+        unreachable_intfs = parse.find_child_objects(
             parentspec=r"^interface\s", childspec=r"^\sip\saddress\s"
         )
         for unreachable_obj in unreachable_intfs:
@@ -669,7 +669,7 @@ class CiscoConfAudit(object):
                 r"^\sip\sunreachables$"
             ) and not unreachable_obj.re_search_children(r"^\sshutdown$"):
                 self.interface_table.add_row(
-                    f"'{unreachable_obj.text}' no ip unreachables", FAIL
+                    f"'{unreachable_obj.parent}' no ip unreachables", FAIL
                 )
             else:
                 unreachable_intfs_pass += 1
