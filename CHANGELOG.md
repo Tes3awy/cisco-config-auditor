@@ -1,6 +1,11 @@
 # Changelog
 
-> NOTE: ciscoconfaudit follows the ([semver](https://semver.org/)) Semantic Versioning 2.0.0 specification meaning it has three numerical version parts with distinct rules `MAJOR.MINOR.PATCH`
+> **NOTE:** ciscoconfaudit follows the ([semver](https://semver.org/)) Semantic Versioning 2.0.0 specification meaning it has three numerical version parts with distinct rules `MAJOR.MINOR.PATCH`
+
+## 0.2.1
+
+- Change ciscoconfaudit to use [ciscoconfparse2](https://github.com/mpenning/ciscoconfparse2) instead of [ciscoconfparse](https://github.com/mpenning/ciscoconfparse)
+- Update README.md
 
 ## 0.2.0
 
