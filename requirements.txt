@@ -1,2 +1,2 @@
 rich==13.7.1
-ciscoconfparse==1.9.41
+ciscoconfparse2==0.7.74
