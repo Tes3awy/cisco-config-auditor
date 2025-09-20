@@ -1,6 +1,6 @@
 [project]
 name = "ciscoconfaudit"
-version = "0.2.1"
+version = "0.2.2"
 description = "A Cisco IOS, IOS-XE, & NX-OS configuration audit tool"
 readme = { file = "README.md", content-type = "text/markdown" }
 requires-python = ">=3.9, <4"
@@ -27,7 +27,10 @@ classifiers = [
     "Programming Language :: Python :: 3.12",
     "Typing :: Typed",
 ]
-dependencies = ["ciscoconfparse2", "rich"]
+dependencies = [
+"rich=>14.1.0",
+"ciscoconfparse2=^0.8.37",
+]
 
 [project.optional-dependencies]
 dev = ["pre-commit", "bumpver", "black", "isort", "python-dotenv"]
